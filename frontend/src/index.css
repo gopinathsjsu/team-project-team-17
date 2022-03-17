@@ -1,13 +1,29 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.nav-search {
+  border-color: black !important;
+  border-width: 2px !important;
+  border-radius: 3rem !important;
+  background-color: #F4F4F4 !important;
+  padding: 10px !important;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.search-button {
+  position: absolute;
+  top: 15%;
+  right: 3%;
+  background-color: #F4F4F4 !important;
+  color: black !important;
+  border-color: #F4F4F4 !important;
+}
+
+.jumbotron {
+  background-image: url(../public/imgs/hero.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 500px;
+  display: flex;
+}
+
+.hero-text {
+  margin-top: 100px;
 }
