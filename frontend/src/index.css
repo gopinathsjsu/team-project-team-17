@@ -37,3 +37,14 @@
   width: 450px;
   height: 350px;
 }
+
+.modal-submit {
+  width: 100%;
+  background-color: black !important;
+  border-radius: 3rem !important;
+}
+
+.modal {
+  width: 40% !important;
+  left: 30% !important;
+}
