@@ -21,7 +21,7 @@ function MyNavbar() {
 
                 <div style={{ width: '75%', position: 'relative' }}>
                     <FormControl type='search' className='nav-search'
-                        placeholder='Search for hotels' title='search' />
+                        placeholder='Search for hotels and locations' title='search' />
                     <Button className='rounded-circle search-button ms-2'
                         size='sm' >
                         <AiOutlineSearch size={25} />

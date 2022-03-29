@@ -48,3 +48,8 @@
   width: 40% !important;
   left: 30% !important;
 }
+
+.search-pic {
+  width: 100%;
+  height: 200px;
+}
