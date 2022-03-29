@@ -1,3 +1,4 @@
+import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -32,14 +33,14 @@ function Home() {
                         <Button variant='dark'>Explore</Button>
                     </Col>
                     <Col>
-                        <Image src='../../imgs/home1.jpg' className='home1-image' />
+                        <Image src='/imgs/home1.jpg' className='home1-image' />
                     </Col>
                 </Row>
             </Container>
             <Container>
                 <Row className='mb-3'>
                     <Col>
-                        <Image src='../../imgs/home2.jpg' className='home2-image' />
+                        <Image src='/imgs/home2.jpg' className='home2-image' />
                     </Col>
                     <Col>
                         <h1>Reap the benefits by being a rewards member</h1>

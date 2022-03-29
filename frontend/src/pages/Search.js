@@ -1,29 +1,31 @@
+import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+
 function Search() {
     const hotels = [
         {
             name: "International New York Times Square",
             location: "123 Wall Street",
-            picture: "../../imgs/home2.jpg",
+            picture: "/imgs/home2.jpg",
             description: "Short description",
             price: 150
         },
         {
             name: "International New York Times Square",
             location: "123 Wall Street",
-            picture: "../../imgs/hero.jpg",
+            picture: "/imgs/hero.jpg",
             description: "Short description",
             price: 150
         },
         {
             name: "International New York Times Square",
             location: "123 Wall Street",
-            picture: "../../imgs/home1.jpg",
+            picture: "/imgs/home1.jpg",
             description: "Short description",
             price: 150
         }

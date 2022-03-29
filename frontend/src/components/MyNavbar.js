@@ -1,3 +1,4 @@
+import React from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { AiOutlineSearch } from 'react-icons/ai'
@@ -6,9 +7,15 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import SignInModal from './SignInModal'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function MyNavbar() {
     const [show, setShow] = useState(false)
+    let navigate = useNavigate()
+
+    const handleSearch = () => {
+        navigate('/search/i')
+    }
 
     return (
         <div>
@@ -23,7 +30,8 @@ function MyNavbar() {
                     <FormControl type='search' className='nav-search'
                         placeholder='Search for hotels and locations' title='search' />
                     <Button className='rounded-circle search-button ms-2'
-                        size='sm' >
+                        size='sm'
+                        onClick={handleSearch} >
                         <AiOutlineSearch size={25} />
                     </Button>
                 </div>
