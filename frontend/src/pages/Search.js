@@ -5,10 +5,15 @@ import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import { useNavigate } from 'react-router-dom'
+
 
 function Search() {
+    const navigate = useNavigate()
+
     const hotels = [
         {
+            id: 1,
             name: "International New York Times Square",
             location: "123 Wall Street",
             picture: "/imgs/home2.jpg",
@@ -16,6 +21,7 @@ function Search() {
             price: 150
         },
         {
+            id: 2,
             name: "International New York Times Square",
             location: "123 Wall Street",
             picture: "/imgs/hero.jpg",
@@ -23,6 +29,7 @@ function Search() {
             price: 150
         },
         {
+            id: 3,
             name: "International New York Times Square",
             location: "123 Wall Street",
             picture: "/imgs/home1.jpg",
@@ -51,7 +58,7 @@ function Search() {
                         <p>From <strong style={{fontSize: "30px"}}>{hotel.price} </strong><strong>USD</strong></p>
                     </Col>
                     <Col md={3}>
-                        <Button variant='dark'>SELECT HOTEL</Button>
+                        <Button variant='dark' onClick={() => navigate(`/hotel/${hotel.id}`)}>SELECT HOTEL</Button>
                     </Col>
                 </Row>
             </Card>

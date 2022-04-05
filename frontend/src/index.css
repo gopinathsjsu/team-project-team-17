@@ -53,3 +53,18 @@
   width: 100%;
   height: 200px;
 }
+
+.hotel-img {
+  width: 400px;
+  height: 400px;
+}
+
+.guest-select {
+  width: 100%;
+  box-shadow: 0 0 7px 1px grey;
+}
+
+.add-button {
+  width: 100%;
+  border-radius: 2rem !important;
+}
