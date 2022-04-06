@@ -55,8 +55,9 @@
 }
 
 .hotel-img {
-  width: 400px;
+  width: 450px;
   height: 400px;
+  margin-right: 100px;
 }
 
 .guest-select {
