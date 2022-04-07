@@ -8,8 +8,10 @@ import Button from 'react-bootstrap/Button';
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import Carousel from 'react-bootstrap/Carousel'
+import { useNavigate } from 'react-router-dom'
 
 function Hotel() {
+    const navigate = useNavigate()
    /* const today = new Date()
     const tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
@@ -65,7 +67,8 @@ function Hotel() {
                         </Dropdown.Menu>
                     </Dropdown>
                     <Button variant='dark' size='lg'
-                        className='mt-3 add-button' >Select room</Button>
+                        className='mt-3 add-button'
+                        onClick={() => navigate('/selectroom')} >Select room</Button>
                 </Col>
             </Row>
         </Container>

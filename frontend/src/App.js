@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home';
 import Search from './pages/Search';
 import Hotel from './pages/Hotel'
+import SelectRoom from './pages/SelectRoom';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path='/' element={<Home />}/>
       <Route path='/search/:search_field' element={<Search />} />
       <Route path='/hotel/:hotel_id' element={<Hotel />} />
+      <Route path='/selectroom' element={<SelectRoom />} />
       </Routes>
     </BrowserRouter>
   );
