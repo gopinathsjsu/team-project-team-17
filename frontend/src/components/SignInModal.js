@@ -70,11 +70,6 @@ function SignInModal(props) {
                                     Sign in
                                 </Button>
                             </Col>
-                            <Col>
-                                <Button type="button" className='modal-submit mt-3' onClick={handleSignIn}>
-                                    Administrative sign in
-                                </Button>
-                            </Col>
                         </Row>
                     </Form>}
             </Modal.Body>

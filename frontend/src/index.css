@@ -73,3 +73,8 @@
 .book-room-button {
   width: 100%;
 }
+
+.book-image {
+  width: 225px;
+  height: 150px;
+}

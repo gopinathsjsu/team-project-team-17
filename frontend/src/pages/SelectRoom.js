@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button'
 
 function SelectRoom() {
     return (
-        <Container>
+        <Container className='text-center'>
             <Row>
                 <Col>
                     <Card style={{ width: '18rem' }} className='mt-3'>
