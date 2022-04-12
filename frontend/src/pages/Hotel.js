@@ -54,7 +54,7 @@ function Hotel() {
                     <h1 style={{ fontFamily: 'Times New Roman' }}>{hotel.name}</h1>
                     <p className='mb-1'>{hotel.location}</p>
                     <p>From <strong style={{fontSize: "50px"}}>{hotel.price} </strong><strong>USD</strong></p>
-                    <Button variant='dark' className='mb-3' onClick={() => setShowDates(!showDates)}>Date of stay: </Button>
+                    <Button variant='dark' className='mb-3' onClick={() => setShowDates(!showDates)}>Date of stay: 04/11/22 to 04/12/22</Button>
                     <div style={{ display: showDates ? 'block' : 'none' }}>
                         <Calendar selectRange={true} />
                     </div>

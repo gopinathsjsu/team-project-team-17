@@ -4,13 +4,16 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
+import { useNavigate } from 'react-router-dom'
 function Home() {
+    const navigate = useNavigate()
+
     return (
         <div>
             <div className="jumbotron jumbotron-fluid mb-3">
                 <div className="container text-center">
                     <h1 className="display-7 text-light hero-text" >Book the perfect place today</h1>
-                    <Button variant='dark' className='text-center mt-3'>Book now</Button>
+                    <Button onClick={() => navigate('/search/i')} variant='dark' className='text-center mt-3'>Book now</Button>
                 </div>
             </div>
             <Container>
@@ -30,7 +33,7 @@ function Home() {
                             Sapien et ligula ullamcorper malesuada proin libero.
                             Ut diam quam nulla porttitor massa.
                         </p>
-                        <Button variant='dark'>Explore</Button>
+                        <Button onClick={() => navigate('/search/i')} variant='dark'>Explore</Button>
                     </Col>
                     <Col>
                         <Image src='/imgs/home1.jpg' className='home1-image' />
