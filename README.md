@@ -1,14 +1,14 @@
 # Team 17
-Phillip Nguyen
-Min Joung Kim
-Manidhar Reddy Buggana
+Phillip Nguyen\
+Min Joung Kim\
+Manidhar Reddy Buggana\
 Subhadra Ranga Swamy
 
 # Contributions
-Phillip Nguyen: 
-Min Joung Kim:
-Manidhar Reddy Buggana:
-Subhadra Ranga Swamy:
+Phillip Nguyen: \
+Min Joung Kim: \
+Manidhar Reddy Buggana: \
+Subhadra Ranga Swamy: 
 
 # Repo
 https://github.com/gopinathsjsu/team-project-team-17
