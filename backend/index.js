@@ -38,7 +38,7 @@ app.use('/user', require('./routes/user'))
 app.use('/hotel', require('./routes/hotel'))
 
 //Connect to server
-const port = 5000
+const port = 8000;
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 })
