@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Col from "react-bootstrap/Col";
 import Row from 'react-bootstrap/Row'
+import axios from "axios";
 
 function SignInModal(props) {
     const signInEmail = useRef(null)
@@ -20,7 +21,20 @@ function SignInModal(props) {
 
     }
 
-    const handleRegister = () => {
+    const handleRegister = (e) => {
+        //Used Axio to send data from frontend to backend
+       // console.log(registerName.current.value, registerEmail.current.value, registerPassword.current.value);
+        e.preventDefault();
+        axios.post('http://localhost:8000/api/register', {
+
+            name: registerName.current.value,
+            password: registerPassword.current.value,
+            email: registerEmail.current.value,
+         })
+
+       .then((res) => console.log(res))
+       .catch((err) => console.log(err));
+
 
     }
 
