@@ -6,7 +6,6 @@ const HotelSchema = new mongoose.Schema({
   description: { type: String, required: true },
   rooms: [ {
     name: { type: String, enum: ['Single room', 'Double room', 'Suite'] },
-    description: String,
     price: Number,
     quantity: Number
   } ],

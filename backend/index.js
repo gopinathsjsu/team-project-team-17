@@ -3,6 +3,9 @@ const express = require('express')
 //Create an express app
 const app = express()
 
+//Get image from url
+app.use('/imgs', express.static('imgs'));
+
 //Parse json and form input
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
