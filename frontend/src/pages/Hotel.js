@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from "react-bootstrap/Col";
 import Row from 'react-bootstrap/Row'
@@ -12,14 +12,20 @@ import { useNavigate } from 'react-router-dom'
 
 function Hotel() {
     const navigate = useNavigate()
-   /* const today = new Date()
-    const tomorrow = new Date()
-    tomorrow.setDate(tomorrow.getDate() + 1)
 
-    const [startDate, setStartDate] = useState(today)
-    const [endDate, setEndDate] = useState(tomorrow)*/
+    const [startDate, setStartDate] = useState(new Date())
+    const [endDate, setEndDate] = useState(new Date())
 
     const [showDates, setShowDates] = useState(false)
+
+    useEffect(() => {
+        const today = new Date()
+        const tomorrow = new Date()
+        tomorrow.setDate(today.getDate() + 1)
+
+        setStartDate(today)
+        setEndDate(tomorrow)
+    }, [])
 
     const hotel = {
         id: 1,
@@ -54,7 +60,9 @@ function Hotel() {
                     <h1 style={{ fontFamily: 'Times New Roman' }}>{hotel.name}</h1>
                     <p className='mb-1'>{hotel.location}</p>
                     <p>From <strong style={{fontSize: "50px"}}>{hotel.price} </strong><strong>USD</strong></p>
-                    <Button variant='dark' className='mb-3' onClick={() => setShowDates(!showDates)}>Date of stay: 04/11/22 to 04/12/22</Button>
+                    <Button variant='dark' className='mb-3' onClick={() => setShowDates(!showDates)}>Date of stay: {
+                        startDate.toLocaleDateString('en-US')
+                    } to {endDate.toLocaleDateString('en-US')}</Button>
                     <div style={{ display: showDates ? 'block' : 'none' }}>
                         <Calendar selectRange={true} />
                     </div>
