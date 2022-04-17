@@ -5,7 +5,11 @@ const Hotel = mongoose.model("Hotel");
 const { upload } = require('../uploadConfig')
 
 //Add hotel
-router.post('/add', (req, res) => {
+router.post('/add', upload.fields([ { name: 'mainImg', maxCount: 1 },
+    { name: 'singleImg', maxCount: 1 },
+    { name: 'doubleImg', maxCount: 1 },
+    { name: 'suiteImg', maxCount: 1 }]), 
+    (req, res) => {
     const { name, location, description, singlePrice, singleQuantity, doublePrice, doubleQuantity,
         suitePrice, suiteQuantity, breakfast, fitness, pool, parking, allMeals } = req.body
 
@@ -13,17 +17,20 @@ router.post('/add', (req, res) => {
         {
             name: 'Single room',
             price: singlePrice,
-            quantity: singleQuantity
+            quantity: singleQuantity,
+            roomImg: req.files.singleImg[0].path
         },
         {
             name: 'Double room',
             price: doublePrice,
-            quantity: doubleQuantity
+            quantity: doubleQuantity,
+            roomImg: req.files.doubleImg[0].path
         },
         {
             name: 'Suite',
             price: suitePrice,
-            quantity: suiteQuantity
+            quantity: suiteQuantity,
+            roomImg: req.files.suiteImg[0].path
         }
     ]
 
@@ -52,6 +59,7 @@ router.post('/add', (req, res) => {
 
 
     const newHotel = new Hotel({
+        mainImg: req.files.mainImg[0].path,
         name: name,
         location: location,
         description: description,
@@ -60,17 +68,17 @@ router.post('/add', (req, res) => {
     })
 
     newHotel.save()
-    .then(hotel => {
-        if (hotel) {
-            res.status(200).send(hotel)
-        }
-        else {
+        .then(hotel => {
+            if (hotel) {
+                res.status(200).send(hotel)
+            }
+            else {
+                res.status(400).send("Failed adding hotel")
+            }
+        })
+        .catch(err => {
             res.status(400).send("Failed adding hotel")
-        }
-    })
-    .catch(err => {
-        res.status(400).send("Failed adding hotel")
-    })
+        })
 })
 
 module.exports = router
