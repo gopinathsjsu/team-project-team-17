@@ -35,28 +35,12 @@ router.post('/add', upload.fields([ { name: 'mainImg', maxCount: 1 },
     ]
 
     const amenities = [
-        {
-            name: 'Daily continental breakfast',
-            price: breakfast
-        },
-        {
-            name: 'Access to fitness room',
-            price: fitness
-        },
-        {
-            name: 'Access to swimming pool/jacuzzi',
-            price: pool
-        },
-        {
-            name: 'Daily parking',
-            price: parking
-        },
-        {
-            name: 'All meals included',
-            price: allMeals
-        }
+        { name: 'Daily continental breakfast', price: breakfast },
+        { name: 'Access to fitness room', price: fitness },
+        { name: 'Access to swimming pool/jacuzzi', price: pool },
+        { name: 'Daily parking', price: parking },
+        { name: 'All meals included', price: allMeals }
     ]
-
 
     const newHotel = new Hotel({
         mainImg: req.files.mainImg[0].path,
@@ -70,7 +54,9 @@ router.post('/add', upload.fields([ { name: 'mainImg', maxCount: 1 },
     newHotel.save()
         .then(hotel => {
             if (hotel) {
-                res.status(200).send(hotel)
+                res.status(200).send({
+                    hotel: hotel
+                })
             }
             else {
                 res.status(400).send("Failed adding hotel")
@@ -79,6 +65,50 @@ router.post('/add', upload.fields([ { name: 'mainImg', maxCount: 1 },
         .catch(err => {
             res.status(400).send("Failed adding hotel")
         })
+})
+
+//Get all hotels
+router.get('/', (req, res) => {
+    Hotel.find({})
+    .then(hotels => {
+        if (hotels) {
+            res.status(200).send({
+                hotels: hotels
+            })
+        }
+        else {
+            res.status(400).send({
+                errorMsg: "Failed retrieving hotels"
+            })
+        }
+    })
+    .catch(err => {
+        res.staus(400).send({
+            errorMsg: "Failed retrieving hotels"
+        })
+    })
+})
+
+//Get hotel based on id
+router.get('/:id', (req, res) => {
+    Hotel.findById(req.params.id)
+    .then(hotel => {
+        if (hotel) {
+            res.status(200).send({
+                hotel: hotel
+            })
+        }
+        else {
+            res.status(400).send({
+                errorMsg: "Failed retrieving hotel"
+            })
+        }
+    })
+    .catch(err => {
+        res.status(400).send({
+            errorMsg: "Failed retrieving hotel"
+        })
+    })
 })
 
 module.exports = router

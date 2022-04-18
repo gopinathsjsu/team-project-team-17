@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Image from 'react-bootstrap/Image'
@@ -6,37 +6,21 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useNavigate } from 'react-router-dom'
-
+import axios from 'axios'
 
 function Search() {
     const navigate = useNavigate()
+    const [hotels, setHotels] = useState([])
 
-    const hotels = [
-        {
-            id: 1,
-            name: "International New York Times Square",
-            location: "123 Wall Street",
-            picture: "/imgs/home2.jpg",
-            description: "Short description",
-            price: 150
-        },
-        {
-            id: 2,
-            name: "International New York Times Square",
-            location: "123 Wall Street",
-            picture: "/imgs/hero.jpg",
-            description: "Short description",
-            price: 150
-        },
-        {
-            id: 3,
-            name: "International New York Times Square",
-            location: "123 Wall Street",
-            picture: "/imgs/home1.jpg",
-            description: "Short description",
-            price: 150
-        }
-    ]
+    useEffect(() => {
+        axios.get('http://localhost:8000/hotel')
+        .then(res => {
+            setHotels(res.data.hotels)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }, [])
 
     return (
         <Container className='mt-5'>
@@ -44,7 +28,7 @@ function Search() {
                 <Card className='mb-3'>
                 <Row>
                     <Col md={4}>
-                        <Image src={hotel.picture} className='search-pic'/>
+                        <Image src={`http://localhost:8000/${hotel.mainImg}`} className='search-pic'/>
                     </Col>
                     <Col md={8} className='mt-3 col-border' >
                         <h4>{hotel.name}</h4>
@@ -55,10 +39,10 @@ function Search() {
                 <hr className='mt-0'/>
                 <Row >
                     <Col md={{span: 3, offset: 6}}>
-                        <p>From <strong style={{fontSize: "30px"}}>{hotel.price} </strong><strong>USD</strong></p>
+                        <p>From <strong style={{fontSize: "30px"}}>{hotel.rooms[0].price} </strong><strong>USD</strong></p>
                     </Col>
                     <Col md={3}>
-                        <Button variant='dark' onClick={() => navigate(`/hotel/${hotel.id}`)}>SELECT HOTEL</Button>
+                        <Button variant='dark' onClick={() => navigate(`/hotel/${hotel._id}`)}>SELECT HOTEL</Button>
                     </Col>
                 </Row>
             </Card>
