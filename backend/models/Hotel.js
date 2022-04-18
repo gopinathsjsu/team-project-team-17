@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 
 const HotelSchema = new mongoose.Schema({
+  mainImg: String,
   name: { type: String, required: true },
   location: { type: String, required: true },
   description: { type: String, required: true },
   rooms: [ {
     name: { type: String, enum: ['Single room', 'Double room', 'Suite'] },
-    description: String,
     price: Number,
-    quantity: Number
+    quantity: Number,
+    roomImg: String
   } ],
   amenities: [ {
     name: { type: String, enum: [
