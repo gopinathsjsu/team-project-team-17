@@ -37,7 +37,7 @@ router.post('/add', upload.fields([ { name: 'mainImg', maxCount: 1 },
     const amenities = [
         { name: 'Daily continental breakfast', price: breakfast },
         { name: 'Access to fitness room', price: fitness },
-        { name: 'Access to swimming pool/jacuzzi', price: pool },
+        { name: 'Access to swimming pool', price: pool },
         { name: 'Daily parking', price: parking },
         { name: 'All meals included', price: allMeals }
     ]
@@ -107,6 +107,28 @@ router.get('/:id', (req, res) => {
     .catch(err => {
         res.status(400).send({
             errorMsg: "Failed retrieving hotel"
+        })
+    })
+})
+
+//Get hotel rooms based on id
+router.get('/rooms/:id', (req, res) => {
+    Hotel.findById(req.params.id)
+    .then(hotel => {
+        if (hotel) {
+            res.status(200).send({
+                rooms: hotel.rooms
+            })
+        }
+        else {
+            res.status(400).send({
+                errorMsg: "Failed retrieving hotel rooms"
+            })
+        }
+    })
+    .catch(err => {
+        res.status(400).send({
+            errorMsg: "Failed retrieving hotel rooms"
         })
     })
 })

@@ -13,6 +13,9 @@ import axios from 'axios'
 import { differenceInDays } from 'date-fns'
 import Toast from 'react-bootstrap/Toast'
 import ToastContainer from 'react-bootstrap/ToastContainer'
+import { useDispatch } from 'react-redux'
+import { selectHotel } from '../actions'
+import API_URL from '../apiConfig';
 
 function Hotel() {
     const navigate = useNavigate()
@@ -25,6 +28,8 @@ function Hotel() {
     const [guests, setGuests] = useState(1)
     const [showToast, setShowToast] = useState(false)
 
+    const dispatch = useDispatch()
+
     useEffect(() => {
         const today = new Date()
         const tomorrow = new Date()
@@ -33,9 +38,8 @@ function Hotel() {
         setStartDate(today)
         setEndDate(tomorrow)
 
-        axios.get(`http://localhost:8000/hotel/${hotel_id}`)
+        axios.get(`${API_URL}/hotel/${hotel_id}`)
             .then(res => {
-                console.log(res.data.hotel.rooms)
                 setHotel(res.data.hotel)
             })
             .catch(err => {
@@ -54,6 +58,15 @@ function Hotel() {
             setShowToast(true)
         }
         else {
+            const bookHotel = {
+                hotelID: hotel_id,
+                startDate: startDate,
+                endDate: endDate,
+                numGuests: guests
+            }
+
+            dispatch(selectHotel(bookHotel))
+
             navigate('/selectroom')
         }
     }
@@ -65,16 +78,16 @@ function Hotel() {
                 <Col className='me-5'>
                     {hotel.rooms && (<Carousel >
                         <Carousel.Item>
-                            <Image src={`http://localhost:8000/${hotel.mainImg}`} className="d-block w-100"></Image>
+                            <Image src={`${API_URL}/${hotel.mainImg}`} className="d-block w-100"></Image>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <Image src={`http://localhost:8000/${hotel.rooms[0].roomImg}`} className="d-block w-100"></Image>
+                            <Image src={`${API_URL}/${hotel.rooms[0].roomImg}`} className="d-block w-100"></Image>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <Image src={`http://localhost:8000/${hotel.rooms[1].roomImg}`} className="d-block w-100"></Image>
+                            <Image src={`${API_URL}/${hotel.rooms[1].roomImg}`} className="d-block w-100"></Image>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <Image src={`http://localhost:8000/${hotel.rooms[2].roomImg}`} className="d-block w-100"></Image>
+                            <Image src={`${API_URL}/${hotel.rooms[2].roomImg}`} className="d-block w-100"></Image>
                         </Carousel.Item>
                     </Carousel>)}
                 </Col>

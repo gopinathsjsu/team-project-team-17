@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import axios from "axios";
+import API_URL from '../apiConfig'
 
 function SignInModal(props) {
   const signInEmail = useRef(null);
@@ -46,7 +47,7 @@ function SignInModal(props) {
       validatePassword(signInPassword.current.value)
     ) {
       axios
-        .post("http://localhost:8000/api/login", {
+        .post(`${API_URL}/api/login`, {
           email: signInEmail.current.value,
           password: signInPassword.current.value,
         })
@@ -65,7 +66,7 @@ function SignInModal(props) {
       valideName(registerName.current.value)
     ) {
       axios
-        .post("http://localhost:8000/api/register", {
+        .post(`${API_URL}/api/register`, {
           name: registerName.current.value,
           email: registerEmail.current.value,
           password: registerPassword.current.value,
