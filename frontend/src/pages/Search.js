@@ -7,13 +7,14 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import API_URL from '../apiConfig'
 
 function Search() {
     const navigate = useNavigate()
     const [hotels, setHotels] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:8000/hotel')
+        axios.get(`${API_URL}/hotel`)
         .then(res => {
             setHotels(res.data.hotels)
         })
@@ -28,7 +29,7 @@ function Search() {
                 <Card className='mb-3'>
                 <Row>
                     <Col md={4}>
-                        <Image src={`http://localhost:8000/${hotel.mainImg}`} className='search-pic'/>
+                        <Image src={`${API_URL}/${hotel.mainImg}`} className='search-pic'/>
                     </Col>
                     <Col md={8} className='mt-3 col-border' >
                         <h4>{hotel.name}</h4>

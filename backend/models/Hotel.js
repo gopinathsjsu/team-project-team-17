@@ -15,7 +15,7 @@ const HotelSchema = new mongoose.Schema({
     name: { type: String, enum: [
         'Daily continental breakfast',
         'Access to fitness room',
-        'Access to swimming pool/jacuzzi',
+        'Access to swimming pool',
         'Daily parking',
         'All meals included'
     ]},
