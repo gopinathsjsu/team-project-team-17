@@ -10,6 +10,9 @@ import Calendar from 'react-calendar';
 import Carousel from 'react-bootstrap/Carousel'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { differenceInDays } from 'date-fns'
+import Toast from 'react-bootstrap/Toast'
+import ToastContainer from 'react-bootstrap/ToastContainer'
 
 function Hotel() {
     const navigate = useNavigate()
@@ -20,6 +23,7 @@ function Hotel() {
     const [showDates, setShowDates] = useState(false)
     const [hotel, setHotel] = useState([])
     const [guests, setGuests] = useState(1)
+    const [showToast, setShowToast] = useState(false)
 
     useEffect(() => {
         const today = new Date()
@@ -39,6 +43,21 @@ function Hotel() {
             })
 
     }, [])
+
+    const handleCalendar = (value, event) => {
+        setStartDate(value[0])
+        setEndDate(value[1])
+    }
+
+    const handleSubmit = () => {
+        if (differenceInDays(endDate, startDate) > 7) {
+            setShowToast(true)
+        }
+        else {
+            navigate('/selectroom')
+        }
+    }
+
 
     return (
         <Container className='mt-5' style={{ width: '60rem', minHeight: '100vh' }}>
@@ -67,7 +86,9 @@ function Hotel() {
                         startDate.toLocaleDateString('en-US')
                     } to {endDate.toLocaleDateString('en-US')}</Button>
                     <div style={{ display: showDates ? 'block' : 'none' }}>
-                        <Calendar selectRange={true} />
+                        <Calendar selectRange={true} 
+                        defaultValue={[startDate, endDate]} onChange={handleCalendar}
+                        minDate={new Date()}/>
                     </div>
                     <Dropdown onSelect={(e) => setGuests(e)}>
                         <Dropdown.Toggle variant="none" className='guest-select mt-3'>
@@ -82,9 +103,17 @@ function Hotel() {
                     </Dropdown>
                     <Button variant='dark' size='lg'
                         className='mt-3 add-button'
-                        onClick={() => navigate('/selectroom')} >Select room</Button>
+                        onClick={handleSubmit} >Select room</Button>
                 </Col>
             </Row>
+            <ToastContainer position='bottom-center' className='position-fixed text-center'>
+            <Toast show={showToast} onClose={() => setShowToast(false)} 
+            autohide delay={3000} className='date-toast'>
+                <Toast.Body>
+                    You can only book rooms for up to 1 week
+                </Toast.Body>
+            </Toast>
+        </ToastContainer>
         </Container>
     )
 }
