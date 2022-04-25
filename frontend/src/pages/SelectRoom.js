@@ -50,11 +50,14 @@ function SelectRoom() {
                                     {room.name === 'Single room' ? '1-2 guests' : '1-4 guests'}
                                 </Card.Text>
                                 <Card.Text>
+                                    {room.quantity} rooms left
+                                </Card.Text>
+                                <Card.Text>
                                 <p>From <strong style={{ fontSize: "30px" }}>{room.price} </strong><strong>USD</strong></p>
                                 </Card.Text>
                                 <Button onClick={() => handleSubmit(room._id)} variant='dark' 
                                 className='book-room-button'
-                                disabled={room.name === 'Single room' && numGuests > 2}>Book room</Button>
+                                disabled={(room.name === 'Single room' && numGuests > 2) || room.quantity === 0}>Book room</Button>
                             </Card.Body>
                         </Card>
                     </Col>
