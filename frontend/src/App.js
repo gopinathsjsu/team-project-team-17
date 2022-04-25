@@ -16,6 +16,7 @@ function App() {
       <Routes>
       <Route path='/' element={<Home />}/>
       <Route path='/search/:search_field' element={<Search />} />
+      <Route path='/search' element={<Search />} />
       <Route path='/hotel/:hotel_id' element={<Hotel />} />
       <Route path='/selectroom' element={<SelectRoom />} />
       <Route path='/bookroom' element={<BookRoom />} />

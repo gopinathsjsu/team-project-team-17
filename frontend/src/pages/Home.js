@@ -13,7 +13,7 @@ function Home() {
             <div className="jumbotron jumbotron-fluid mb-3">
                 <div className="container text-center">
                     <h1 className="display-7 text-light hero-text" >Book the perfect place today</h1>
-                    <Button onClick={() => navigate('/search/i')} variant='dark' className='text-center mt-3'>Book now</Button>
+                    <Button onClick={() => navigate('/search')} variant='dark' className='text-center mt-3'>Book now</Button>
                 </div>
             </div>
             <Container>
@@ -33,7 +33,7 @@ function Home() {
                             Sapien et ligula ullamcorper malesuada proin libero.
                             Ut diam quam nulla porttitor massa.
                         </p>
-                        <Button onClick={() => navigate('/search/i')} variant='dark'>Explore</Button>
+                        <Button onClick={() => navigate('/search/')} variant='dark'>Explore</Button>
                     </Col>
                     <Col>
                         <Image src='/imgs/home1.jpg' className='home1-image' />
