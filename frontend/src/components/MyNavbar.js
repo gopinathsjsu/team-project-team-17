@@ -6,15 +6,16 @@ import { LinkContainer } from 'react-router-bootstrap'
 import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import SignInModal from './SignInModal'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 function MyNavbar() {
     const [show, setShow] = useState(false)
     let navigate = useNavigate()
+    const search = useRef(null)
 
     const handleSearch = () => {
-        navigate('/search/i')
+        navigate(`/search/${search.current.value}`)
     }
 
     return (
@@ -28,7 +29,7 @@ function MyNavbar() {
 
                 <div style={{ width: '75%', position: 'relative' }}>
                     <FormControl type='search' className='nav-search'
-                        placeholder='Search for hotels and locations' title='search' />
+                        placeholder='Search for hotels and locations' title='search' ref={search}/>
                     <Button className='rounded-circle search-button ms-2'
                         size='sm'
                         onClick={handleSearch} >

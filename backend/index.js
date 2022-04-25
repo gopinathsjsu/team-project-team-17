@@ -35,10 +35,12 @@ mongoose.connect('mongodb+srv://admin:G2BP1n6f7kINHSb4@cluster0.weast.mongodb.ne
 //import Models/schemas
 require('./models/User')
 require('./models/Hotel')
+require('./models/Booking')
 
 //Set up routes
 app.use('/api', require('./routes/user'))
 app.use('/hotel', require('./routes/hotel'))
+app.use('/booking', require('./routes/booking'))
 
 //Connect to server
 const port = 8000;

@@ -5,23 +5,37 @@ import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import API_URL from '../apiConfig'
 
 function Search() {
     const navigate = useNavigate()
     const [hotels, setHotels] = useState([])
+    const { search_field } = useParams()
 
     useEffect(() => {
         axios.get(`${API_URL}/hotel`)
         .then(res => {
-            setHotels(res.data.hotels)
+            let filtered = []
+
+            if (search_field) {
+                filtered = res.data.hotels.filter(hotel => {
+                    return hotel.location.toLowerCase().includes(search_field.toLowerCase()) ||
+                            hotel.name.toLowerCase().includes(search_field.toLowerCase())
+                })
+            }
+            else {
+                console.log('fjklsf')
+                filtered = res.data.hotels
+            }
+
+            setHotels(filtered)
         })
         .catch(err => {
             console.log(err)
         })
-    }, [])
+    }, [search_field])
 
     return (
         <Container className='mt-5'>
