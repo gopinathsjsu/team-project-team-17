@@ -10,13 +10,39 @@ import Image from "react-bootstrap/Image";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import API_URL from "../apiConfig";
+import { differenceInYears, isWithinInterval, areIntervalsOverlapping, differenceInCalendarDays } from 'date-fns'
+import { getBankHolidays } from 'date-fns-holiday-us'
+import { useNavigate } from 'react-router-dom'
 
 function BookRoom() {
   const bookInfo = useSelector((state) => state);
   const [hotel, setHotel] = useState({});
   const [amenities, setAmenities] = useState([]);
+  const [rewards, setRewards] = useState(0)
+  const [rewardsChecked, setRewardsChecked] = useState(false)
+  const [isWeekend, setIsWeekend] = useState(false)
+  const [loyalty, setLoyalty] = useState(0)
+  const [holiday, setHoliday] = useState(false)
+  const [holidayName, setHolidayName] = useState('')
+  const [summer, setSummer] = useState(false)
+  const [numDays, setNumDays] = useState(0)
+  const navigate = useNavigate()
+  let totalCost = 0
+
+  const user = {
+    _id: "625b462af2388f242141eeda",
+    date: new Date('1/1/2020'),
+    rewards: 500
+  }
 
   useEffect(() => {
+    setIsWeekend(hasWeekend(bookInfo.startDate, bookInfo.endDate))
+    setLoyalty(getYears(user.date))
+    setHoliday(hasHoliday(bookInfo.startDate, bookInfo.endDate))
+    setSummer(areIntervalsOverlapping({ start: bookInfo.startDate, end: bookInfo.endDate }, 
+      { start: new Date(2022, 5, 21), end: new Date(2022, 8, 23)}))
+    setNumDays(differenceInCalendarDays(bookInfo.endDate, bookInfo.startDate))
+
     axios
       .get(`${API_URL}/hotel/${bookInfo.hotelID}`)
       .then((res) => {
@@ -41,16 +67,35 @@ function BookRoom() {
   };
 
   const getTotal = () => {
-    console.log("fjdksf");
     let total = 0;
 
     total += bookInfo.room.price;
     total += bookInfo.numGuests * 5;
+    total += numDays * 10
+
+    total -= loyalty * 10
+    
+    if (rewardsChecked && rewards) {
+      total -= rewards / 100
+    }
+
+    if (isWeekend) {
+      total += 10
+    }
+
+    if (holiday) {
+      total += 20
+    }
+
+    if (summer) {
+      total += 10
+    }
 
     for (const amenity of amenities) {
       total += amenity.price;
     }
 
+    totalCost = total
     return total.toFixed(2);
   };
 
@@ -78,12 +123,7 @@ function BookRoom() {
     const today = new Date();
     const past = new Date(date);
 
-    let years = 0;
-
-    while (today > past) {
-      past.setFullYear(past.getFullYear() + 1);
-      years++;
-    }
+    let years = differenceInYears(today, past)
 
     if (years > 5) {
       return 5;
@@ -91,6 +131,50 @@ function BookRoom() {
       return years;
     }
   };
+
+  const hasHoliday = (firstInterval, secondInterval) => {
+    const holidays = getBankHolidays(2022)
+
+    for (const key in holidays) {
+      if (isWithinInterval(holidays[key].date, {start: firstInterval, end: secondInterval})) {
+        var name = key.replace(/([A-Z])/g, ' $1').trim()
+        name = name.charAt(0).toUpperCase() + name.slice(1)
+        setHolidayName(name)
+        return true
+      }
+    }
+
+    return false
+  }
+
+  const handleSubmit = () => {
+    let amenitiesName = []
+    amenities.forEach(amenity => amenitiesName.push(amenity.name))
+
+    const booking = {
+      user: user._id,
+      hotel: bookInfo.hotelID,
+      startDate: bookInfo.startDate,
+      endDate: bookInfo.endDate,
+      room: bookInfo.room.name,
+      numGuests: bookInfo.numGuests,
+      rewards: {
+        used: rewardsChecked,
+        amount: rewards
+      },
+      total: totalCost,
+      amenities: amenitiesName
+    }
+
+    axios.post(`${API_URL}/booking`, booking)
+    .then(res => {
+      console.log(res.data.booking)
+      navigate('/')
+    })
+    .catch(err => {
+      console.log(err.response.data.errorMsg)
+    })
+  }
 
   return (
     <Container className="mt-3 mb-3">
@@ -117,9 +201,13 @@ function BookRoom() {
                   </Card.Text>
                   <Card.Text>Number of guests: {bookInfo.numGuests}</Card.Text>
                   <Form.Check
-                    label="Apply rewards balance: 500 points"
+                    inline
                     type="checkbox"
+                    onChange={(e) => setRewardsChecked(e.target.checked)}
                   />
+                  <Form.Label>Apply rewards:
+                    <Form.Control size="sm" className="rewards-input" value={rewards}
+                      onChange={(e) => setRewards(e.target.value)} /> / {user.rewards} points</Form.Label>
                 </Col>
                 <Col lg={2}>
                   <h3 style={{ marginTop: "100%" }}>
@@ -164,6 +252,9 @@ function BookRoom() {
               ${(bookInfo.numGuests * 5).toFixed(2)}
             </span>
           </p>
+          {numDays !== 0 && <p>
+            Length of stay: {numDays} days<span style={{ float: "right" }}>${(numDays * 10).toFixed(2)}</span>
+          </p>}
           <h6>Optional amenities</h6>
           {amenities.map((amenity) => (
             <p>
@@ -174,23 +265,26 @@ function BookRoom() {
             </p>
           ))}
           <h6>Booking date</h6>
-          <p>
-            Weekend <span style={{ float: "right" }}>$9.99</span>
-          </p>
-          <p>
-            Holiday <span style={{ float: "right" }}>$19.99</span>
-          </p>
+          {isWeekend && <p>
+            Weekend <span style={{ float: "right" }}>$10.00</span>
+          </p>}
+          {holiday && <p>
+            {holidayName} <span style={{ float: "right" }}>$20.00</span>
+          </p>}
+          {summer && <p>
+            Summer <span style={{ float: "right" }}>$10.00</span>
+          </p>}
           <h6>Discounts</h6>
-          <p>
-            Customer loyalty <span style={{ float: "right" }}>-$9.99</span>
-          </p>
-          <p>
-            Rewards <span style={{ float: "right" }}>-$4.99</span>
-          </p>
+          {loyalty !== 0 && <p>
+            Customer loyalty <span style={{ float: "right" }}>-${(loyalty * 10).toFixed(2)}</span>
+          </p>}
+          {(rewardsChecked && rewards && rewards !== 0) && <p>
+            Rewards <span style={{ float: "right" }}>-${(rewards / 100).toFixed(2)}</span>
+          </p>}
           <h3>
             Total <span style={{ float: "right" }}>${getTotal()}</span>
           </h3>
-          <Button variant="dark" className="book-room-button">
+          <Button variant="dark" className="book-room-button" onClick={handleSubmit}>
             Book room
           </Button>
         </Col>
