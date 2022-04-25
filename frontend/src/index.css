@@ -83,3 +83,9 @@
   color: white !important;
   background-color: #212529 !important;
 }
+
+.rewards-input {
+  width: 50px !important;
+  display: inline !important;
+  margin-left: 5px;
+}
