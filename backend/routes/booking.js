@@ -42,4 +42,38 @@ router.post('/', (req, res) => {
     })
 })
 
+router.get('/:user_id', (req, res) => {
+    Booking.find( { user: req.params.user_id }).populate('hotel', 'name mainImg location')
+    .then(bookings => {
+        res.status(200).send({
+            success: true,
+            bookings: bookings
+        })
+    })
+    .catch(err => {
+        res.status(400).send({
+            success: false,
+            errorMsg: 'Failed to retrieve bookings'
+        })
+    })
+})
+
+router.delete('/:booking_id', (req, res) => {
+    Booking.deleteOne({ _id: req.params.booking_id }, (err, result) => {
+        if (err) {
+            res.status(400).send({
+                success: false,
+                errorMsg: 'Failed to delete booking'
+            })
+        }
+
+        if (result) {
+            res.status(200).send({
+                success: true,
+                result: result
+            })
+        }
+    })
+})
+
 module.exports = router
