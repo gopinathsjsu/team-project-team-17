@@ -29,15 +29,8 @@ function SignInModal(props) {
 
   const validatePassword = (password) => {
     const re =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,}$/;
     return re.test(String(password));
-  };
-
-  const valideName = (name) => {
-    //   a valid name must have the following format:
-    //   [chars] [chars] [chars]
-    const re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
-    return re.test(String(name));
   };
 
   const handleSignInSubmit = (e) => {
@@ -62,8 +55,7 @@ function SignInModal(props) {
     e.preventDefault();
     if (
       validateEmail(registerEmail.current.value) &&
-      validatePassword(registerPassword.current.value) &&
-      valideName(registerName.current.value)
+      validatePassword(registerPassword.current.value)
     ) {
       axios
         .post(`${API_URL}/api/register`, {
@@ -107,6 +99,7 @@ function SignInModal(props) {
             <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" ref={registerPassword} />
+              <Form.Text>Password should be minimum 5 characters, at least 1 uppercase letter, and at least 1 number</Form.Text>
             </Form.Group>
             <Form.Text
               className="text-muted"
