@@ -10,8 +10,8 @@ router.post('/', (req, res) => {
     const booking = new Booking({
         user: user,
         hotel: hotel,
-        startDate: new Date(req.body.startDate),
-        endDate: new Date(req.body.endDate),
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
         room: room,
         amenities: amenities,
         total: total,

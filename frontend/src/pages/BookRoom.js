@@ -26,6 +26,7 @@ function BookRoom() {
   const [holidayName, setHolidayName] = useState('')
   const [summer, setSummer] = useState(false)
   const [numDays, setNumDays] = useState(0)
+  const [roomImg, setRoomImg] = useState('')
   const navigate = useNavigate()
   let totalCost = 0
 
@@ -46,7 +47,15 @@ function BookRoom() {
     axios
       .get(`${API_URL}/hotel/${bookInfo.hotelID}`)
       .then((res) => {
-        setHotel(res.data.hotel);
+        const hotel = res.data.hotel
+        setHotel(hotel);
+
+        for (let i = 0; i < hotel.rooms.length; i++) {
+          if (hotel.rooms[i].name === bookInfo.room.name) {
+            setRoomImg(hotel.rooms[i].roomImg)
+            break
+          }
+        }
       })
       .catch((err) => {
         console.log(err.response.data.errorMsg);
@@ -188,7 +197,7 @@ function BookRoom() {
               <Row>
                 <Col lg={4}>
                   <Image
-                    src={`${API_URL}/${hotel.mainImg}`}
+                    src={`${API_URL}/${roomImg}`}
                     className="book-image"
                   />
                 </Col>

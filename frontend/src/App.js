@@ -8,6 +8,7 @@ import Search from './pages/Search';
 import Hotel from './pages/Hotel'
 import SelectRoom from './pages/SelectRoom';
 import BookRoom from './pages/BookRoom'
+import MyBookings from './pages/MyBookings'
 import { useSelector } from 'react-redux'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path='/hotel/:hotel_id' element={<Hotel />} />
       <Route path='/selectroom' element={<SelectRoom />} />
       <Route path='/bookroom' element={hotelID ? <BookRoom /> : <Home />} />
+      <Route path='/mybookings/:user_id' element={<MyBookings />} />
       </Routes>
     </BrowserRouter>
   );
