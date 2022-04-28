@@ -89,3 +89,20 @@
   display: inline !important;
   margin-left: 5px;
 }
+
+.add-hotel-container {
+  width: 45rem !important;
+}
+
+.add-hotel-form {
+  border-color: grey;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 0.5px;
+  padding: 1rem;
+}
+
+.add-hotel-img {
+  width: 150px;
+  height: 150px;
+}

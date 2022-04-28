@@ -38,6 +38,7 @@ function MyNavbar() {
                 </div>
                 <Nav className='ms-auto' >
                     <Nav.Link onClick={() => setShow(true)}>Sign in</Nav.Link>
+                    <Nav.Link onClick={() => navigate('/addhotel')}>Add Hotel</Nav.Link>
                 </Nav>
             </Navbar>
             <SignInModal show={show} handleClose={() => setShow(false)} />
