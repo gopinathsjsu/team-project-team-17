@@ -31,6 +31,8 @@ function Hotel() {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
         const today = new Date()
         const tomorrow = new Date()
         tomorrow.setDate(today.getDate() + 1)
