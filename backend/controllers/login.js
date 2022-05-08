@@ -9,16 +9,16 @@ exports.login = async (req, res) => {
         
         const {email, password} = req.body;
         
-        console.log("password => ", password);
+        //console.log("password => ", password);
 
         //check if our db has user with that email
         const user = await User.findOne({email});
         if(!user) return res.status(400).send("No user found");
-        console.log("user => ", user);
+        //console.log("user => ", user);
   
         //check password
         const match = comparePassword(password, user.password);
-        console.log(match);
+        //console.log(match);
         if(!match) return res.status(400).send("Wrong password");
        
         //create signed token
