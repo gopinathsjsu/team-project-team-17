@@ -8,14 +8,21 @@ import Button from 'react-bootstrap/Button'
 import SignInModal from './SignInModal'
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import NavDropdown from 'react-bootstrap/NavDropdown'
 
 function MyNavbar() {
     const [show, setShow] = useState(false)
     let navigate = useNavigate()
     const search = useRef(null)
+    const user = JSON.parse(localStorage.getItem('user'))
 
     const handleSearch = () => {
         navigate(`/search/${search.current.value}`)
+    }
+
+    const handleSignOut = () => {
+        localStorage.removeItem('user')
+        navigate('/')
     }
 
     return (
@@ -29,17 +36,27 @@ function MyNavbar() {
 
                 <div style={{ width: '75%', position: 'relative' }}>
                     <FormControl type='search' className='nav-search'
-                        placeholder='Search for hotels and locations' title='search' ref={search}/>
+                        placeholder='Search for hotels and locations' title='search' ref={search} />
                     <Button className='rounded-circle search-button ms-2'
                         size='sm'
                         onClick={handleSearch} >
                         <AiOutlineSearch size={25} />
                     </Button>
                 </div>
-                <Nav className='ms-auto' >
-                    <Nav.Link onClick={() => setShow(true)}>Sign in</Nav.Link>
-                    <Nav.Link onClick={() => navigate('/addhotel')}>Add Hotel</Nav.Link>
-                </Nav>
+                {localStorage.getItem('user') === null ?
+                    <Nav className='ms-auto' >
+                        <Nav.Link onClick={() => setShow(true)}>Sign in</Nav.Link>
+                    </Nav> :
+                    <Nav className='ms-auto' >
+                        <NavDropdown title='My account' menuVariant="dark">
+                            <NavDropdown.Item >My profile</NavDropdown.Item>
+                            <NavDropdown.Item 
+                            onClick={() => navigate(`/mybookings/${JSON.parse(localStorage.getItem('user')).user._id}`)}>My bookings</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={handleSignOut}>Sign out</NavDropdown.Item>
+                        </NavDropdown>
+                        {(user && user.email === 'admin@gmail.com') && <Nav.Link onClick={() => navigate('/addhotel')}>Add Hotel</Nav.Link>}
+                    </Nav>}
             </Navbar>
             <SignInModal show={show} handleClose={() => setShow(false)} />
         </div>

@@ -11,6 +11,7 @@ import BookRoom from './pages/BookRoom'
 import MyBookings from './pages/MyBookings'
 import { useSelector } from 'react-redux'
 import AddHotel from './pages/AddHotel';
+import MyProfile from './pages/MyProfile';
 
 function App() {
   const hotelID = useSelector(state => state.hotelID)
@@ -27,6 +28,7 @@ function App() {
       <Route path='/bookroom' element={hotelID ? <BookRoom /> : <Home />} />
       <Route path='/mybookings/:user_id' element={<MyBookings />} />
       <Route path='/addhotel' element={<AddHotel />} />
+      <Route path='/myprofile' element={<MyProfile />} />
       </Routes>
     </BrowserRouter>
   );

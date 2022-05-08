@@ -11,11 +11,11 @@ import Carousel from "react-bootstrap/Carousel";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { differenceInDays } from "date-fns";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
 import { useDispatch } from "react-redux";
 import { selectHotel } from "../actions";
 import API_URL from "../apiConfig";
+import MyToast from '../components/MyToast'
+import ManageRoomsModal from "../components/MangeRoomsModal";
 
 function Hotel() {
   const navigate = useNavigate();
@@ -27,8 +27,12 @@ function Hotel() {
   const [hotel, setHotel] = useState([]);
   const [guests, setGuests] = useState(1);
   const [showToast, setShowToast] = useState(false);
+  const [toastText, setToastText] = useState('')
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const dispatch = useDispatch();
+
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -58,6 +62,7 @@ function Hotel() {
   const handleSubmit = () => {
     if (!isSevenDays(startDate, endDate)) {
       setShowToast(true);
+      setToastText('Your booking must be 7 days or less')
     } else {
       const bookHotel = {
         hotelID: hotel_id,
@@ -78,102 +83,95 @@ function Hotel() {
   };
 
   return (
-    <Container className="mt-5" style={{ width: "60rem", minHeight: "100vh" }}>
-      <Row>
-        <Col className="me-5">
-          {hotel.rooms && (
-            <Carousel>
-              <Carousel.Item>
-                <Image
-                  src={`${API_URL}/${hotel.mainImg}`}
-                  className="d-block w-100"
-                ></Image>
-              </Carousel.Item>
-              <Carousel.Item>
-                <Image
-                  src={`${API_URL}/${hotel.rooms[0].roomImg}`}
-                  className="d-block w-100"
-                ></Image>
-              </Carousel.Item>
-              <Carousel.Item>
-                <Image
-                  src={`${API_URL}/${hotel.rooms[1].roomImg}`}
-                  className="d-block w-100"
-                ></Image>
-              </Carousel.Item>
-              <Carousel.Item>
-                <Image
-                  src={`${API_URL}/${hotel.rooms[2].roomImg}`}
-                  className="d-block w-100"
-                ></Image>
-              </Carousel.Item>
-            </Carousel>
-          )}
-        </Col>
-        <Col>
-          <h1 style={{ fontFamily: "Times New Roman" }}>{hotel.name}</h1>
-          <p className="mb-1">{hotel.location}</p>
-          {hotel.rooms && (
-            <p>
-              From{" "}
-              <strong style={{ fontSize: "50px" }}>
-                {hotel.rooms[0].price}{" "}
-              </strong>
-              <strong>USD</strong>
-            </p>
-          )}
-          <Button
-            variant="dark"
-            className="mb-3"
-            onClick={() => setShowDates(!showDates)}
-          >
-            Date of stay: {startDate.toLocaleDateString("en-US")} to{" "}
-            {endDate.toLocaleDateString("en-US")}
-          </Button>
-          <div style={{ display: showDates ? "block" : "none" }}>
-            <Calendar
-              selectRange={true}
-              defaultValue={[startDate, endDate]}
-              onChange={handleCalendar}
-              minDate={new Date()}
-            />
-          </div>
-          <Dropdown onSelect={(e) => setGuests(e)}>
-            <Dropdown.Toggle variant="none" className="guest-select mt-3">
-              Number of guests: {guests}
-            </Dropdown.Toggle>
-            <Dropdown.Menu style={{ width: "100%" }}>
-              <Dropdown.Item eventKey={1}>1</Dropdown.Item>
-              <Dropdown.Item eventKey={2}>2</Dropdown.Item>
-              <Dropdown.Item eventKey={3}>3</Dropdown.Item>
-              <Dropdown.Item eventKey={4}>4</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Button
-            variant="dark"
-            size="lg"
-            className="mt-3 add-button"
-            onClick={handleSubmit}
-          >
-            Select room
-          </Button>
-        </Col>
-      </Row>
-      <ToastContainer
-        position="bottom-center"
-        className="position-fixed text-center"
-      >
-        <Toast
-          show={showToast}
-          onClose={() => setShowToast(false)}
-          autohide
-          delay={3000}
-          className="date-toast"
-        >
-          <Toast.Body>You can only book rooms for up to 1 week</Toast.Body>
-        </Toast>
-      </ToastContainer>
-    </Container>
+    <div>
+      <Container className="mt-5" style={{ width: "60rem", minHeight: "100vh" }}>
+        <Row>
+          <Col className="me-5">
+            {hotel.rooms && (
+              <Carousel>
+                <Carousel.Item>
+                  <Image
+                    src={`${API_URL}/${hotel.mainImg}`}
+                    className="d-block w-100"
+                  ></Image>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <Image
+                    src={`${API_URL}/${hotel.rooms[0].roomImg}`}
+                    className="d-block w-100"
+                  ></Image>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <Image
+                    src={`${API_URL}/${hotel.rooms[1].roomImg}`}
+                    className="d-block w-100"
+                  ></Image>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <Image
+                    src={`${API_URL}/${hotel.rooms[2].roomImg}`}
+                    className="d-block w-100"
+                  ></Image>
+                </Carousel.Item>
+              </Carousel>
+            )}
+          </Col>
+          <Col>
+            <h1 style={{ fontFamily: "Times New Roman" }}>{hotel.name}</h1>
+            <p className="mb-1">{hotel.location}</p>
+            {hotel.rooms && (
+              <p>
+                From{" "}
+                <strong style={{ fontSize: "50px" }}>
+                  {hotel.rooms[0].price}{" "}
+                </strong>
+                <strong>USD</strong>
+              </p>
+            )}
+            <Button
+              variant="dark"
+              className="mb-3"
+              onClick={() => setShowDates(!showDates)}
+            >
+              Date of stay: {startDate.toLocaleDateString("en-US")} to{" "}
+              {endDate.toLocaleDateString("en-US")}
+            </Button>
+            <div style={{ display: showDates ? "block" : "none" }}>
+              <Calendar
+                selectRange={true}
+                defaultValue={[startDate, endDate]}
+                onChange={handleCalendar}
+                minDate={new Date()}
+              />
+            </div>
+            <Dropdown onSelect={(e) => setGuests(e)}>
+              <Dropdown.Toggle variant="none" className="guest-select mt-3">
+                Number of guests: {guests}
+              </Dropdown.Toggle>
+              <Dropdown.Menu style={{ width: "100%" }}>
+                <Dropdown.Item eventKey={1}>1</Dropdown.Item>
+                <Dropdown.Item eventKey={2}>2</Dropdown.Item>
+                <Dropdown.Item eventKey={3}>3</Dropdown.Item>
+                <Dropdown.Item eventKey={4}>4</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Button
+              variant="dark"
+              size="lg"
+              className="mt-3 add-button"
+              onClick={handleSubmit}
+              disabled={localStorage.getItem('user') === null}
+            >
+              Select room
+            </Button>
+            {(user && user.email === 'admin@gmail.com') &&
+            <Button variant='dark' size='lg' className="mt-3 add-button" onClick={() => setShow(true)}>Manage rooms</Button>}
+          </Col>
+        </Row>
+        <MyToast show={showToast} handleClose={() => setShowToast(false)} text={toastText} />
+      </Container>
+      <ManageRoomsModal show={show} handleClose={() => setShow(false)}/>
+    </div>
   );
 }
 
