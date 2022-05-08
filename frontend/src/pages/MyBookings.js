@@ -81,6 +81,7 @@ const MyBookings = () => {
                                 <Col lg={6}>
                                     <Card.Text>Location: {booking.hotel.location}</Card.Text>
                                     <Card.Text>Number of guests: {booking.numGuests}</Card.Text>
+                                    <Card.Text>Rewards used: {booking.rewards && booking.rewards.amount} points</Card.Text>
                                     <Card.Text className='mb-0'>Amenities: </Card.Text>
                                     {booking.amenities.map(amenity => (
                                         <Card.Text className='ms-3 mb-0'>{amenity}</Card.Text>

@@ -10,5 +10,22 @@ router.post('/register', register);
 //Log in
 router.post('/login', login)
 
+//Get user info
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password')
+
+        res.status(200).send({
+            success: true,
+            user: user
+        })
+    } catch(e) {
+        res.status(400).send({
+            success: false,
+            errorMsg: 'Failed getting user info'
+        })
+    }
+})
+
 module.exports = router
 

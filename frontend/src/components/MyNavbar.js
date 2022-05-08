@@ -49,9 +49,9 @@ function MyNavbar() {
                     </Nav> :
                     <Nav className='ms-auto' >
                         <NavDropdown title='My account' menuVariant="dark">
-                            <NavDropdown.Item >My profile</NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => navigate('/myprofile')}>My profile</NavDropdown.Item>
                             <NavDropdown.Item 
-                            onClick={() => navigate(`/mybookings/${JSON.parse(localStorage.getItem('user')).user._id}`)}>My bookings</NavDropdown.Item>
+                            onClick={() => navigate(`/mybookings/${user._id}`)}>My bookings</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={handleSignOut}>Sign out</NavDropdown.Item>
                         </NavDropdown>

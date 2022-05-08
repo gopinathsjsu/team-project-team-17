@@ -31,7 +31,7 @@ function BookRoom() {
   const navigate = useNavigate()
   let totalCost = 0
 
-  const user_id = JSON.parse(localStorage.getItem('user')).user._id
+  const user_id = JSON.parse(localStorage.getItem('user'))._id
 
   useEffect(() => {
     axios.get(`${API_URL}/api/${user_id}`)
@@ -183,7 +183,7 @@ function BookRoom() {
     axios.post(`${API_URL}/booking`, booking)
     .then(res => {
       console.log(res.data.booking)
-      navigate('/')
+      navigate(`/mybookings/${user_id}`)
     })
     .catch(err => {
       console.log(err.response.data.errorMsg)
@@ -192,6 +192,7 @@ function BookRoom() {
 
   return (
     <Container className="mt-3 mb-3">
+      <h4>Congrats, you'll earn 500 points by booking!</h4>
       <Row>
         <Col lg={9}>
           <Card>
