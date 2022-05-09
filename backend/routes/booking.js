@@ -153,4 +153,28 @@ router.delete('/:booking_id', (req, res) => {
     })
 })
 
+router.put('/:id', async (req, res) => {
+    try {
+        const updateBooking = await Booking.findByIdAndUpdate(req.params.id, req.body, { new: true })
+
+        if (updateBooking) {
+            res.status(200).send({
+                success: true,
+                booking: updateBooking
+            })
+        }
+        else {
+            res.status(400).send({
+                success: false,
+                errorMsg: 'Failed to update booking'
+            })
+        }
+    } catch(e) {
+        res.status(400).send({
+            success: false,
+            errorMsg: 'Failed to update booking'
+        })
+    }
+})
+
 module.exports = router
