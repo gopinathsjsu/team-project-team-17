@@ -25,9 +25,11 @@ const MyProfile = () => {
     const getUserInfo = () => {
         axios.get(`${API_URL}/api/${userID}`)
             .then(res => {
-                setUser(res.data.user)
-                setName(res.data.user.name)
-                setEmail(res.data.user.email)
+                const data = res.data.user
+                console.log(data)
+                setUser(data)
+                setName(data.name)
+                setEmail(data.email)
             })
             .catch(err => {
                 console.log(err)
