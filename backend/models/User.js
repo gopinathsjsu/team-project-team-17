@@ -8,8 +8,8 @@ const UserSchema = new mongoose.Schema({
   },
   password: { type: String, required: true },
   name: { type: String, required: true }, 
-  date: Date,
-  rewards: Number,
+  date: { type: Date, default: Date.now },
+  rewards: { type: Number, default: 0 },
 
 });
 

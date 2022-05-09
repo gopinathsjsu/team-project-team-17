@@ -20,10 +20,11 @@ exports.register = async (req, res) => {
 
    const user = new User({name, password: hashedPassword, email});
    try{
-    await user.save();
+    const savedUser = await user.save();
     console.log("Registered => ", user);
     return res.json({
         ok: true,
+        user: savedUser
     });
 
 } catch(err) {

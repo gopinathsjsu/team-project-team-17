@@ -133,4 +133,29 @@ router.get('/rooms/:id', (req, res) => {
     })
 })
 
+//Update hotel rooms
+router.put('/updateRooms/:id', async (req, res) => {
+    try {
+        const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, {rooms: req.body.rooms})
+
+        if (updatedHotel) {
+            res.status(200).send({
+                success: true,
+                hotel: updatedHotel
+            })
+        }
+        else {
+            res.status(400).send({
+                success: false,
+                errorMsg: 'Failed to update room info'
+            })
+        }
+    } catch (e) {
+        res.status(400).send({
+            success: false,
+            errorMsg: 'Failed to update room info'
+        })
+    }
+})
+
 module.exports = router

@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import axios from "axios";
 import API_URL from '../apiConfig'
+import MyToast from "./MyToast";
 
 function SignInModal(props) {
   const signInEmail = useRef(null);
@@ -18,41 +19,50 @@ function SignInModal(props) {
 
   const [register, setRegister] = useState(false);
 
+  const [showToast, setShowToast] = useState(false)
+  const [toastText, setToastText] = useState('') 
+
   const validateEmail = (email) => {
     //   a valid email must have the following format:
     //   [chars]@[chars].[2+ letters]
 
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   };
 
   const validatePassword = (password) => {
-    const re =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,}$/;
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{5,}$/;
     return re.test(String(password));
   };
 
   const handleSignInSubmit = (e) => {
     e.preventDefault();
-    if (
-      validateEmail(signInEmail.current.value) &&
-      validatePassword(signInPassword.current.value)
+
+    if (validateEmail(signInEmail.current.value) && validatePassword(signInPassword.current.value)
     ) {
       axios
         .post(`${API_URL}/api/login`, {
           email: signInEmail.current.value,
           password: signInPassword.current.value,
         })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-    } else {
-      alert("Invalid email or password");
+        .then((res) => {
+          localStorage.setItem('user', JSON.stringify(res.data.user))
+          props.handleClose()
+        })
+        .catch((err) => {
+          setShowToast(true)
+          setToastText('Invalid email/password')
+        });
+    }
+    else {
+      setShowToast(true)
+      setToastText('Please enter in both fields correctly')
     }
   };
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
+
     if (
       validateEmail(registerEmail.current.value) &&
       validatePassword(registerPassword.current.value)
@@ -63,16 +73,24 @@ function SignInModal(props) {
           email: registerEmail.current.value,
           password: registerPassword.current.value,
         })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          localStorage.setItem('user', JSON.stringify(res.data.user))
+          props.handleClose()
+
+        })
+        .catch((err) => {
+          setShowToast(true)
+        setToastText('Email already taken')
+        });
     } else {
-      console.log("error");
-      alert("Please fill in all the fields correctly");
+      setShowToast(true)
+      setToastText('Please enter in all fields correctly')
     }
   };
 
   return (
-    <Modal
+    <div>
+      <Modal
       show={props.show}
       onHide={props.handleClose}
       className="modal"
@@ -143,6 +161,8 @@ function SignInModal(props) {
         )}
       </Modal.Body>
     </Modal>
+    <MyToast show={showToast} handleClose={() => setShowToast(false)} text={toastText} />
+    </div>
   );
 }
 

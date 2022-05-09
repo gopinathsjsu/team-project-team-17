@@ -27,18 +27,23 @@ function BookRoom() {
   const [summer, setSummer] = useState(false)
   const [numDays, setNumDays] = useState(0)
   const [roomImg, setRoomImg] = useState('')
+  const [user, setUser] = useState({})
   const navigate = useNavigate()
   let totalCost = 0
 
-  const user = {
-    _id: "625b462af2388f242141eeda",
-    date: new Date('1/1/2020'),
-    rewards: 500
-  }
+  const user_id = JSON.parse(localStorage.getItem('user'))._id
 
   useEffect(() => {
+    axios.get(`${API_URL}/api/${user_id}`)
+    .then(res => {
+      setUser(res.data.user)
+      setLoyalty(getYears(new Date(res.data.user.date)))
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
     setIsWeekend(hasWeekend(bookInfo.startDate, bookInfo.endDate))
-    setLoyalty(getYears(user.date))
     setHoliday(hasHoliday(bookInfo.startDate, bookInfo.endDate))
     setSummer(areIntervalsOverlapping({ start: bookInfo.startDate, end: bookInfo.endDate }, 
       { start: new Date(2022, 5, 21), end: new Date(2022, 8, 23)}))
@@ -178,7 +183,7 @@ function BookRoom() {
     axios.post(`${API_URL}/booking`, booking)
     .then(res => {
       console.log(res.data.booking)
-      navigate('/')
+      navigate(`/mybookings/${user_id}`)
     })
     .catch(err => {
       console.log(err.response.data.errorMsg)
@@ -187,6 +192,7 @@ function BookRoom() {
 
   return (
     <Container className="mt-3 mb-3">
+      <h4>Congrats, you'll earn 500 points by booking!</h4>
       <Row>
         <Col lg={9}>
           <Card>
