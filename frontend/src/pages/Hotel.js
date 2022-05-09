@@ -170,7 +170,7 @@ function Hotel() {
         </Row>
         <MyToast show={showToast} handleClose={() => setShowToast(false)} text={toastText} />
       </Container>
-      <ManageRoomsModal show={show} handleClose={() => setShow(false)}/>
+      <ManageRoomsModal show={show} handleClose={() => setShow(false)} rooms={hotel.rooms} id={hotel._id}/>
     </div>
   );
 }

@@ -27,5 +27,30 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.put('/updateInfo/:id', async (req, res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+
+        if (updatedUser) {
+            res.status(200).send({
+                success: true,
+                user: updatedUser
+            })
+        }
+        else {
+            res.status(400).send({
+                success: false,
+                errorMsg: 'Failed updating user info'
+            })
+        }
+    }
+    catch (e) {
+        res.status(400).send({
+            success: false,
+            errorMsg: 'Failed updating user info'
+        })
+    }
+})
+
 module.exports = router
 
