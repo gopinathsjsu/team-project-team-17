@@ -30,11 +30,11 @@ function MyNavbar() {
             <Navbar className='px-4' bg='dark' variant='dark'>
                 <LinkContainer to='/'>
                     <Navbar.Brand >
-                        Hotels
+                        Enigma Hotels
                     </Navbar.Brand>
                 </LinkContainer>
 
-                <div style={{ width: '75%', position: 'relative' }}>
+                <div style={{ width: '65%', position: 'relative' }}>
                     <FormControl type='search' className='nav-search'
                         placeholder='Search for hotels and locations' title='search' ref={search} />
                     <Button className='rounded-circle search-button ms-2'
