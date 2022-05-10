@@ -13,6 +13,7 @@ import API_URL from "../apiConfig";
 import { differenceInYears, isWithinInterval, areIntervalsOverlapping, differenceInCalendarDays } from 'date-fns'
 import { getBankHolidays } from 'date-fns-holiday-us'
 import { useNavigate } from 'react-router-dom'
+import MyToast from "../components/MyToast";
 
 function BookRoom() {
   const bookInfo = useSelector((state) => state);
@@ -30,6 +31,8 @@ function BookRoom() {
   const [user, setUser] = useState({})
   const navigate = useNavigate()
   let totalCost = 0
+  const [showToast, setShowToast] = useState(false)
+  const [toastText, setToastText] = useState('')
 
   const user_id = JSON.parse(localStorage.getItem('user'))._id
 
@@ -162,6 +165,12 @@ function BookRoom() {
   }
 
   const handleSubmit = () => {
+    if (rewards > user.rewards) {
+      setShowToast(true)
+      setToastText('Please enter a rewards amount that\'s not higher than what you have')
+      return
+    }
+
     let amenitiesName = []
     amenities.forEach(amenity => amenitiesName.push(amenity.name))
 
@@ -304,6 +313,7 @@ function BookRoom() {
           </Button>
         </Col>
       </Row>
+      <MyToast show={showToast} handleClose={() => setShowToast(false)} text={toastText} />
     </Container>
   );
 }

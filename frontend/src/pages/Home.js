@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
 import { useNavigate } from 'react-router-dom'
+import SignInModal from '../components/SignInModal'
 function Home() {
     const navigate = useNavigate()
+    const [show, setShow] = useState(false)
 
     return (
         <div>
@@ -21,17 +23,14 @@ function Home() {
                     <Col className='mb-3'>
                         <h1>What do you feel like exploring?</h1>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ipsum nunc aliquet bibendum enim facilisis
-                            gravida neque convallis.
+                            Wherever you want to stay, Enigma Hotels
+                            has got a place for you. From everyday essential travel to luxury escapes and budget-wise staycations,
+                            find an ever-growing collection of welcoming experiences.
                         </p>
                         <p>
-                            Quisque non tellus orci ac auctor.
-                            Faucibus vitae aliquet nec ullamcorper.
-                            Suspendisse in est ante in nibh.
-                            Sapien et ligula ullamcorper malesuada proin libero.
-                            Ut diam quam nulla porttitor massa.
+                            Whenever and wherever you travel, we're here for you.
+                            Use our explore tool to browse and discover our many hotels and resorts around the world
+                            or search by key destination.
                         </p>
                         <Button onClick={() => navigate('/search/')} variant='dark'>Explore</Button>
                     </Col>
@@ -48,22 +47,19 @@ function Home() {
                     <Col>
                         <h1>Reap the benefits by being a rewards member</h1>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ipsum nunc aliquet bibendum enim facilisis
-                            gravida neque convallis.
+                            As a rewards member, you get access to our
+                            rewards and customer loyalty program where you
+                            can apply discounts to reservations you make.
                         </p>
                         <p>
-                            Quisque non tellus orci ac auctor.
-                            Faucibus vitae aliquet nec ullamcorper.
-                            Suspendisse in est ante in nibh.
-                            Sapien et ligula ullamcorper malesuada proin libero.
-                            Ut diam quam nulla porttitor massa.
+                            Wherever you go, however you stay, make it rewarding with Enigma Hotel Rewards.
+                            Get started by creating an account today!
                         </p>
-                        <Button variant='dark'>Sign up</Button>
+                        <Button variant='dark' onClick={() => setShow(true)}>Sign up</Button>
                     </Col>
                 </Row>
             </Container>
+            <SignInModal show={show} handleClose={() => setShow(false)} />
         </div>
     )
 }
