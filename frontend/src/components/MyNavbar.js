@@ -18,6 +18,7 @@ function MyNavbar() {
 
     const handleSearch = () => {
         navigate(`/search/${search.current.value}`)
+        search.current.value = ''
     }
 
     const handleSignOut = () => {
