@@ -1,2 +1,2 @@
-const API_URL = 'http://localhost:8000'
+const API_URL = 'http://54.193.232.51:8000'
 export default API_URL

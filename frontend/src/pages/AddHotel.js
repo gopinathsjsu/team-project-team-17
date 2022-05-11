@@ -31,6 +31,12 @@ const AddHotel = () => {
     const suitePrice = useRef(null)
     const suiteQuantity = useRef(null)
 
+    const breakfast = useRef(null)
+    const fitness = useRef(null)
+    const pool = useRef(null)
+    const parking = useRef(null)
+    const allMeals = useRef(null)
+
     const navigate = useNavigate()
 
     const handlePicUpload = (e) => {
@@ -76,6 +82,11 @@ const AddHotel = () => {
         formData.append('doubleQuantity', doubleQuantity.current.value)
         formData.append('suitePrice', suitePrice.current.value)
         formData.append('suiteQuantity', suiteQuantity.current.value)
+        formData.append('breakfast', breakfast.current.value)
+        formData.append('fitness', fitness.current.value)
+        formData.append('pool', pool.current.value)
+        formData.append('parking', parking.current.value)
+        formData.append('allMeals', allMeals.current.value)
 
         axios.post(`${API_URL}/hotel/add`, formData)
         .then(res => {
@@ -133,6 +144,13 @@ const AddHotel = () => {
                         <Form.Control type='text' placeholder='Quantity' className='mb-3' ref={suiteQuantity}/>
                     </Col>
                 </Row>
+                <hr />
+                <h5>Optional amenities prices</h5>
+                <Form.Control type='text' placeholder='Daily continental breakfast' className='mb-3' ref={breakfast}/>
+                <Form.Control type='text' placeholder='Access to fitness room' className='mb-3' ref={fitness}/>
+                <Form.Control type='text' placeholder='Access to swimming pool' className='mb-3' ref={pool}/>
+                <Form.Control type='text' placeholder='Daily parking' className='mb-3' ref={parking}/>
+                <Form.Control type='text' placeholder='All meals included' className='mb-3' ref={allMeals}/>
             </Form>
             <Button className='mt-3 mb-3 float-end w-100' variant='dark' onClick={handleSubmit}>Submit</Button>
             <input
