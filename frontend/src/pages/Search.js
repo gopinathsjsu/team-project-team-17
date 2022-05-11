@@ -34,8 +34,8 @@ function Search() {
           // count the number of hotels
           setNumberOfHotels(filtered.length);
         } else {
-          console.log("fjklsf");
           filtered = res.data.hotels;
+          setNumberOfHotels(filtered.length)
         }
 
         setHotels(filtered);
@@ -48,15 +48,7 @@ function Search() {
 
   return (
     <Container className="mt-5">
-      {numberOfHotels > 0 && (
-        <Card className="mb-3">
-          <Row>
-            <Col>
-              <h1>{numberOfHotels} Hotels found</h1>
-            </Col>
-          </Row>
-        </Card>
-      )}
+      <h3 className='mb-3'>{numberOfHotels} Hotels found</h3>
       {hotels.map((hotel) => (
         <Card className="mb-3">
           <Row>
