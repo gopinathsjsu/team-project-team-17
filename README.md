@@ -5,10 +5,10 @@ Manidhar Reddy Buggana\
 Subhadra Ranga Swamy
 
 # Contributions
-Phillip Nguyen: Helped with admin functionality and booking aspects\
-Min Joung Kim: \
-Manidhar Reddy Buggana: \
-Subhadra Ranga Swamy: 
+Phillip Nguyen: Worked on admin functionality and booking aspects\
+Min Joung Kim: Worked on the user APIs in the backend and integration\
+Manidhar Reddy Buggana: Worked on form verification and dynamic pricings on bookings (weekend, customer loyalty, etc)\
+Subhadra Ranga Swamy: Worked on modifying user and hotel information and made UI wireframes
 
 # Repo
 https://github.com/gopinathsjsu/team-project-team-17
