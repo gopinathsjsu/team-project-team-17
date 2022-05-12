@@ -10,6 +10,22 @@ Min Joung Kim: Worked on the user APIs in the backend and integration\
 Manidhar Reddy Buggana: Worked on form verification and dynamic pricings on bookings (weekend, customer loyalty, etc)\
 Subhadra Ranga Swamy: Worked on modifying user and hotel information and made UI wireframes
 
+# Feature set
+Admin:\
+  &emsp;-Add hotels\
+  &emsp;-Manage rooms\
+User:\
+  &emsp;-Create an account\
+  &emsp;-Log in\
+  &emsp;-Manage and edit their info\
+  &emsp;-Search for hotels\
+  &emsp;-Book hotel room\
+  &emsp;-Choose optional amenities in booking\
+  &emsp;-Apply reward points in booking\
+  &emsp;-Get discounts from customer loyalty (length of membership)\
+  &emsp;-Edit their booking by room and number of guests\
+  &emsp;-Cancel bookings
+
 # Repo
 https://github.com/gopinathsjsu/team-project-team-17
 
