@@ -115,8 +115,11 @@ router.delete('/:booking_id', (req, res) => {
                     }
 
                     if (hotel) {
-                        if (booking.rewards.used) {
-                            User.findByIdAndUpdate(booking.user, {$inc: { rewards: booking.rewards.amount}}, { new: true })
+                        const rewardsChanged = -500
+
+                        if (booking.rewards.used) rewardsChanged += booking.rewards.amount
+
+                        User.findByIdAndUpdate(booking.user, {$inc: { rewards: rewardsChanged}}, { new: true })
                             .then(updatedUser => {
                                 if (updatedUser) {
                                     res.status(200).send({
@@ -139,14 +142,6 @@ router.delete('/:booking_id', (req, res) => {
                                     errorMsg: "Failed to refund rewards"
                                 })
                             })
-                        }
-                        else {
-                            res.status(200).send({
-                                success: true,
-                                booking: booking,
-                                hotel: hotel
-                            })
-                        }
                     }
                 })
         }
