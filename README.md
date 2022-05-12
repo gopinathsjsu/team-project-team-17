@@ -10,6 +10,17 @@ Min Joung Kim: Worked on the user APIs in the backend and integration\
 Manidhar Reddy Buggana: Worked on form validation and dynamic pricings on bookings (weekend, customer loyalty, etc)\
 Subhadra Ranga Swamy: Worked on modifying user and hotel information and made UI wireframes
 
+# Scrum meetings
+Every Monday/Tuesday with status updates on Friday/Saturday
+
+# Technologies used
+Frontend: React + Redux\
+Backend: Node + Express\
+Database: MongoDB
+
+# XP core value
+Simplicity - more details found in project journal
+
 # Feature set
 Admin:\
   &emsp;-Add hotels\
