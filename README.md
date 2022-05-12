@@ -7,7 +7,7 @@ Subhadra Ranga Swamy
 # Contributions
 Phillip Nguyen: Worked on admin functionality and booking aspects\
 Min Joung Kim: Worked on the user APIs in the backend and integration\
-Manidhar Reddy Buggana: Worked on form verification and dynamic pricings on bookings (weekend, customer loyalty, etc)\
+Manidhar Reddy Buggana: Worked on form validation and dynamic pricings on bookings (weekend, customer loyalty, etc)\
 Subhadra Ranga Swamy: Worked on modifying user and hotel information and made UI wireframes
 
 # Feature set
